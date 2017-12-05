@@ -7,7 +7,7 @@ CVGIT licensed under the [AGPL](http://www.gnu.org/licenses/agpl.html).
 
 ## Authors
 
-* **Juan Aznar Poveda** - jap17@alu.upct.com
+* **Juan Aznar Poveda** - juan.aznarp@gmail.com
 * **José Antonio López Pastor** - joseantonio.lopez@upct.es 
 * **Antonio Javier García Sánchez** - antoniojavier.garcia@upct.es
 
