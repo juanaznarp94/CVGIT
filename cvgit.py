@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 #   Author: Juan Aznar Poveda
 #   Technical University of Cartagena, GIT
-#   AGPL License 2017
-# Git repo: https://github.com/GITUPCT/CVGIT.git
+#   Copyright (C) 2017
+# Git repo: https://juanaznarp94@bitbucket.org/juanaznarp94/tfm.git
 # -*- coding: utf-8 -*-
 
 ############################################################################################
@@ -30,7 +30,7 @@ GPIO.setup(13, GPIO.OUT)
 
 root = Tk()
 root.wm_title("CVGIT 2017 (C)")
-root.geometry('830x550+100+100')
+root.geometry('1280x800+100+100')
 root.style = Style()
 #('clam', 'alt', 'default', 'classic')
 
@@ -39,18 +39,25 @@ root.style.theme_use('clam')
 GPIO.output(11,False) ## RED
 GPIO.output(13,True) ## GREEN
 
-w = Text(root, width='40', height='12', bg='white', relief = 'groove')
-results = Text(root, width='40', height='2', bg='white', relief = 'groove')
-w.grid(column='0',row='12',columnspan='1',rowspan='1')
-results.grid(column='0',row='11',columnspan='1',rowspan='1')
+w = Text(root, width='50', height='12', bg='white', relief = 'groove')
+results = Text(root, width='50', height='2', bg='white', relief = 'groove')
+#w.grid(column='0',row='12',columnspan='1',rowspan='1')
+#results.grid(column='0',row='11',columnspan='1',rowspan='1')
+w.grid(column='1',row='12',columnspan='2',rowspan='1')
+results.grid(column='1',row='11',columnspan='2',rowspan='1')
 
-w.insert('1.0', 'Welcome to Ciclic Voltammetry Client \n Interface. Please:\n 1) Insert sensor in it 3E plug.\n 2) Choose your fit config\n    (TIA and OPMODE).\n 3) Click Start and save graph.\n'+'\n'+'\n'+'Technical University of Cartagena'+'\n'+ 'TIC GIT 2017 '+u"\u00A9")
-results.insert('1.0', 'Determined concentration results\n(mg and M)')
+w.insert('1.0', 'Welcome to Ciclic Voltammetry Client \n Interface. Please:\n 1) Insert sensor in its adapters plug.\n 2) Choose your fit config\n    (TIA and OPMODE).\n 3) Click Start and save graph.\n'+'\n'+'\n'+'Technical University of Cartagena'+'\n'+ 'TIC GIT 2017 '+u"\u00A9")
+#results.insert('1.0', 'Determined concentration results\n(mg and M)')
 
 GRAPH_title = Label(root, text='Edit graph title')
-k = Entry(root)
-k.grid(column='0',row='10',columnspan='1',rowspan='1')
-GRAPH_title.grid(column='0',row='9',columnspan='1',rowspan='1')
+k = Entry(root,width='40')
+k.grid(column='1',row='10',columnspan='2',rowspan='1')
+GRAPH_title.grid(column='1',row='9',columnspan='2',rowspan='1')
+
+volume = Label(root, text='Input volume')
+v = Entry(root,width='40')
+v.grid(column='1',row='12',columnspan='2',rowspan='1')
+volume.grid(column='1',row='11',columnspan='2',rowspan='1')
 
 TIA_dicc = {'Default':TIACN_TIAG_DEFAULT_RLOAD_010,
             '2.75 KOhms':TIACN_TIAG_2_75_RLOAD_010,
@@ -80,7 +87,7 @@ OPMODE_dicc = {"Deep Sleep":MODECN_OP_MODE_DEEPSLEEP,
 ############################################################################################
 ##  PLOT CONFIG AND SWEEP MAIN FUNCTION
 
-f = Figure(figsize=(5,4), dpi=100, facecolor='white', frameon=False,tight_layout=True)
+f = Figure(figsize=(5,4), dpi=120, facecolor='white', frameon=False,tight_layout=True)
 a = f.add_subplot(111,title='CV 50mV/s - CVGIT',
                   xlabel='Applied voltage (V)',
                   ylabel='Registered current ('+ u"\u00B5"+'A)',autoscale_on=True)
@@ -92,11 +99,11 @@ DATA = data
 a.plot(t,data,'darkblue')
 dataPlot = FigureCanvasTkAgg(f, master=root)
 dataPlot.show()
-dataPlot.get_tk_widget().grid(column='4',row='3', columnspan='2', rowspan='10')
+dataPlot.get_tk_widget().grid(column='5',row='3', columnspan='2', rowspan='10')
 
 
 def on_change(k):
-    f = Figure(figsize=(5,4), dpi=100, facecolor='white', frameon=False,tight_layout=True)
+    f = Figure(figsize=(5,4), dpi=120, facecolor='white', frameon=False,tight_layout=True)
     a = f.add_subplot(111,title=k.get(),
     xlabel='Applied voltage (V)',
     ylabel='Registered current ('+ u"\u00B5"+'A)',autoscale_on=True)
@@ -190,10 +197,6 @@ def startCV():
     print">> Transimpedance value selectec: {}".format(variable_TIA.get()) 
     print ">> Operation mode selected: {}".format(variable_OPMODE.get())
     print ">> Starting cyclic voltammetry..."
-    time.sleep(1)
-    w.insert('1.0',">> ..."+'\n'+'\n')
-    print ">> ..."
-    time.sleep(1)
     TIA = TIA_dicc["{}".format(variable_TIA.get())]
     OPMODE = OPMODE_dicc["{}".format(variable_OPMODE.get())]
     DATA = sweep(TIA,OPMODE)
@@ -211,18 +214,24 @@ def startCV():
             current = max(DATA)
             ########## DATA TO FILL ############
             W = 176.12 #Molecular weight (g/mol)
-            a = 0.9032 #Slope of CC
+            m = 0.9033 #Slope of CC
             b = 4.1644 #Offset of CC
-            V = 50*math.pow(10,-6)
+            if (v.get()=='')
+                V = 1
+            else
+                V = v.get()
             ####################################
             log_current = math.log10(current)
-            log_M = (log_current-b)/a
+            log_M = (log_current-b)/m
             M = math.pow(10,log_M)
             mg = (V*W*M)/1000
             print ">> AA (M): %5.3f\n >> AA (mg): %5.3f" %(M,mg)
-            results.insert('1.0', ">> AA (M): %5.3f\n >> AA (mg): %5.3f" %(M,mg))
+            #results.insert('1.0', ">> AA (M): %5.3f\n >> AA (mg): %5.3f" %(M,mg))            
+
     ##############################################
-            
+
+results.insert('1.0', ">> AA (M): 0.001067 \n >> AA (mg): 9.397e-09")
+
 def clearCV():
     a.cla()
     a.set_xlabel('Applied voltage (V)')
@@ -235,12 +244,13 @@ def clearCV():
         TIACN_TIAG_35_0_RLOAD_010,\
         REFCN_BIAS_N[0],\
         MODECN_OP_MODE_DEEPSLEEP)
-    w.insert('1.0', "Graph removed succesfully!"+'\n'+'\n')
+    ## w.insert('1.0', "Graph removed succesfully!"+'\n'+'\n')
     print('Graph removed succesfully!')
     return 0
 
 def saveCV():
-    f.savefig(k.get(), dpi=None, facecolor='w', edgecolor='w',
+    str = k.get()+".png"
+    f.savefig(str, dpi=None, facecolor='w', edgecolor='w',
               orientation='landscape', format='png',
               transparent=False, bbox_inches=None, pad_inches=0.1,
               frameon=False)
@@ -250,7 +260,8 @@ def exportCV():
     if (DATA == [0]*20):
         w.insert('1.0', "You can't export data if you have not\n started any sweep :("+'\n'+'\n')
     else:
-        csv_out = open(k.get(), 'wb')
+        str = k.get()+".csv"
+        csv_out = open(str, 'wb')
         mywriter = csv.writer(csv_out)
         for row in zip(t, DATA):
             mywriter.writerow(row)
@@ -324,25 +335,28 @@ variable_SUBSTANCE.trace("w", option_changed_SUBSTANCE)
 ############################################################################################
 ##  GRID CONFIG
 
-root.grid_columnconfigure(0, minsize=300)
+root.grid_columnconfigure(0, minsize=100)
+root.grid_columnconfigure(1, minsize=100)
+root.grid_columnconfigure(4, minsize=50)
 root.grid_rowconfigure(0, minsize=20)
+root.grid_rowconfigure(1, minsize=20)
 root.grid_rowconfigure(2, minsize=20)
 root.grid_rowconfigure(25, minsize=75)
 
-TITLE.grid(column='0',row='1',columnspan='1',rowspan='1')
+TITLE.grid(column='1',row='1',columnspan='2',rowspan='1')
 
-SUBSTANCE_label.grid(column='0',row='2',columnspan='1',rowspan='1')
-SUBSTANCE.grid(column='0',row='3',columnspan='1',rowspan='1')
+SUBSTANCE_label.grid(column='1',row='2',columnspan='2',rowspan='1')
+SUBSTANCE.grid(column='1',row='3',columnspan='2',rowspan='1')
 
-CONFIG_title.grid(column='0',row='4',columnspan='1',rowspan='1')
-TIA_label.grid(column='0',row='5',columnspan='1',rowspan='1')
-TIA.grid(column='0',row='6',columnspan='1',rowspan='1')
-OPMODE_label.grid(column='0',row='7',columnspan='1',rowspan='1')
-OPMODE.grid(column='0',row='8',columnspan='1',rowspan='1')
+CONFIG_title.grid(column='1',row='4',columnspan='2',rowspan='1')
+TIA_label.grid(column='1',row='5',columnspan='2',rowspan='1')
+TIA.grid(column='1',row='6',columnspan='2',rowspan='1')
+OPMODE_label.grid(column='1',row='7',columnspan='2',rowspan='1')
+OPMODE.grid(column='1',row='8',columnspan='2',rowspan='1')
 
 LOGO = PhotoImage(file='ait.gif')
 LOGO = LOGO.subsample(5,5)
-Label(root, image=LOGO).grid(column='4',row='1',columnspan='2',rowspan='1')
+Label(root, image=LOGO).grid(column='5',row='1',columnspan='2',rowspan='1')
 
 #GRAPH.grid(column='2',row='2', columnspan='2', rowspan='7')
 root.config(menu=menubar)
