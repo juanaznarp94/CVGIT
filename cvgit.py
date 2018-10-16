@@ -216,9 +216,9 @@ def startCV():
             W = 176.12 #Molecular weight (g/mol)
             m = 0.9033 #Slope of CC
             b = 4.1644 #Offset of CC
-            if (v.get()=='')
+            if (v.get()==''):
                 V = 1
-            else
+            else:
                 V = v.get()
             ####################################
             log_current = math.log10(current)
