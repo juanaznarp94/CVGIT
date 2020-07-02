@@ -1,9 +1,8 @@
-#!/usr/bin/python3
 #   Author: Juan Aznar Poveda
 #   Technical University of Cartagena, GIT
-#   AGPL License 2017
-# Git repo: https://github.com/GITUPCT/CVGIT.git
+#   Copyright (C) 2017
 # -*- coding: utf-8 -*-
+# Git repo: https://juanaznarp94@bitbucket.org/juanaznarp94/tfm.git
 
 from var import *
 

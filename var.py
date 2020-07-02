@@ -1,10 +1,3 @@
-#!/usr/bin/python3
-#   Author: Juan Aznar Poveda
-#   Technical University of Cartagena, GIT
-#   AGPL License 2017
-# Git repo: https://github.com/GITUPCT/CVGIT.git
-# -*- coding: utf-8 -*-
-
 ############################################################################################
 
 ## 1) LIBRARIES and VARIABLES

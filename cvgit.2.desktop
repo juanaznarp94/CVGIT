@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=CVGIT
+Version=1.0
+Encoding=UTF-8
+Icon=/home/pi/Desktop/tfm/logo.png
+Exec=/home/pi/Desktop/tfm/test.sh
+Terminal=true
+Type=Application
