@@ -11,4 +11,4 @@ CVGIT licensed under the [AGPL](http://www.gnu.org/licenses/agpl.html).
 * **José Antonio López Pastor** - joseantonio.lopez@upct.es 
 * **Antonio Javier García Sánchez** - antoniojavier.garcia@upct.es
 
-Technical University of Cartagena - Group of telematic engineering, 2017
+Technical University of Cartagena - Department of Information and Communications Technologies, Group of Telematic Engineering, 2020
